@@ -11,6 +11,7 @@ const config = [
       index: 'src/index.js',
       useFirestore: 'src/useFirestore.js',
       useFirestoreGetOne: 'src/useFirestoreGetOne.js',
+      useFirestoreQuery: 'src/useFirestoreQuery.js',
     },
     output: [
       {
