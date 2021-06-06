@@ -1,0 +1,61 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            node_modules-
+      - name: Install dependencies
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+  verify:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Run linter
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: lint
+      - name: Run unit tests
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: test --passWithNoTests
+
+  publish:
+    needs: [prepare, verify]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Build package
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+      - name: Release new package version
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: npx semantic-release
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}

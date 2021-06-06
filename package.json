@@ -1,0 +1,139 @@
+{
+  "name": "@ctrlup/firestore",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Firestore React hooks easy-to-use",
+  "repository": "https://github.com/ctrlup-io/firestore.git",
+  "license": "MIT",
+  "author": "Valentin Barit <valentin.barit@ctrlup.io>",
+  "main": "dist/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "analyze": "live-server ./stats.html --open --port=5000",
+    "build": "rimraf dist && rollup -c",
+    "commit": "git-cz",
+    "coverage": "live-server ./coverage/lcov-report/ --open --port=4000",
+    "format": "prettier --write '{*,src/**/*}.{html,js,jsx,json,md,mdx}'",
+    "lint": "eslint --cache .",
+    "test": "react-scripts test --coverage"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{html,js,jsx,json,md}": "prettier --write",
+    "package.json": "sort-package-json",
+    "yarn.lock": "yarn-deduplicate"
+  },
+  "prettier": "@qbaepst/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "eslintIgnore": [
+    "dist",
+    "es"
+  ],
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "src/index.js"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "text-summary"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@harelpls/storybook-addon-materialui": "^2.0.0",
+    "@qbaepst/prettier-config": "^1.3.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/github": "^7.2.3",
+    "@testing-library/react": "^11.2.7",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/parser": "^4.0.0",
+    "babel-eslint": "^10.0.0",
+    "babel-loader": "8.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-testing-library": "^4.6.0",
+    "git-cz": "^4.7.6",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "live-server": "^1.2.1",
+    "prettier": "^2.3.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.50.6",
+    "rollup-plugin-visualizer": "^5.5.0",
+    "semantic-release": "^17.4.3",
+    "sort-package-json": "^1.50.0",
+    "typescript": "^4.3.2",
+    "webpack": "4.44.2",
+    "yarn-deduplicate": "^3.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDepencies": {
+    "firebase": ">=8",
+    "react": ">=17"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/npm",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            "docs/CHANGELOG.md",
+            "package.json"
+          ]
+        }
+      ]
+    ]
+  }
+}
